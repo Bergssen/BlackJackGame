@@ -15,7 +15,7 @@ namespace Bergsen_BlackJack
         public Form1()
         {
             InitializeComponent();
-            this.BackColor = Color.Black; // Sätt bakgrundsfärg till svart på instansen
+            this.BackColor = Color.Black; // Sätt bakgrundsfärg till svart på instansen //Test
             MaximizeBox = false;           //Tillåt inte omskalning av applikationen
             MinimizeBox = false;
             FormBorderStyle = FormBorderStyle.FixedSingle; //Tillåt inte omskalning av applikationen
