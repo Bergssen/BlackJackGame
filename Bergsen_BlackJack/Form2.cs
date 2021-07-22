@@ -44,8 +44,8 @@ namespace Bergsen_BlackJack
             button4.Hide();
             button5.Hide();
             this.drawCard = new Programmability();
-            player = new SoundPlayer("C:/Users/Nathalie/Desktop/DrawCard.Wav");
-            playerWin = new SoundPlayer("C:/Users/Nathalie/Desktop/WinSound.Wav");
+            player = new SoundPlayer(Bergsen_BlackJack.Properties.Resources.DrawCard);
+            playerWin = new SoundPlayer(Bergsen_BlackJack.Properties.Resources.WinSound);
         }
 
         private void Form2_Load(object sender, EventArgs e)
