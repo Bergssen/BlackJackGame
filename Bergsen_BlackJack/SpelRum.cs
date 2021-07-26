@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Bergsen_BlackJack
 {
-    public partial class Form2 : Form     
+    public partial class SpelRum : Form     
     {
         private int AntaletPengar = 5000;         //Fields, fält av olika datatyper och klasser som lagrar data och som ändras beroende på vad som händer under programmets gång.
         private int summaDealer = 0;
@@ -23,27 +23,27 @@ namespace Bergsen_BlackJack
         CardHandler drawCard;
         SoundPlayer player;
         SoundPlayer playerWin;     
-        public Form2()       //Klassens konstruktor, kör koden nedan när kl
+        public SpelRum()       //Klassens konstruktor, kör koden nedan när kl
         {
             InitializeComponent();
             MaximizeBox = false;           //Tillåt inte omskalning av applikationen ddd
             MinimizeBox = false;
-            label1.BackColor = Color.Transparent;   //Bakgrundsfärgen ska vara transparant
-            label2.BackColor = Color.Transparent;
-            label3.BackColor = Color.Transparent;
-            label2.Hide();
-            label6.BackColor = Color.White;      //Sätt backgrundsfärg på rubrik containrar
-            label6.Hide();                       // Göm containrar när klassen 
-            label5.BackColor = Color.White;
-            label5.Hide();
-            pictureBox1.Hide();
-            pictureBox2.Hide();
+            Pengar.BackColor = Color.Transparent;   //Bakgrundsfärgen ska vara transparant
+            SpelareSumma.BackColor = Color.Transparent;
+            DealerSumma.BackColor = Color.Transparent;
+            SpelareSumma.Hide();
+            TextIPratbubbla.BackColor = Color.White;      //Sätt backgrundsfärg på rubrik containrar
+            TextIPratbubbla.Hide();                       // Göm containrar när klassen 
+            KortNummer.BackColor = Color.White;
+            KortNummer.Hide();
+            KortBild.Hide();
+            Pratbubbla.Hide();
 
-            label3.Hide();
+            DealerSumma.Hide();
             FormBorderStyle = FormBorderStyle.FixedSingle;   
-            label1.Text = "Kr: " + AntaletPengar.ToString();  //Konvertera antalet pengar till string för att visas i Label1
-            button4.Hide();
-            button5.Hide();
+            Pengar.Text = "Kr: " + AntaletPengar.ToString();  //Konvertera antalet pengar till string för att visas i Label1
+            HitKnapp.Hide();
+            StandKnapp.Hide();
             drawCard = new CardHandler();  //instansiering av nytt objekt av klassen Programmability, objektet drawCard kommer 
             player = new SoundPlayer(Bergsen_BlackJack.Properties.Resources.DrawCard);     //Ny instansiering av klasserna SoundPlayer, där vi skickar med åtkomstpunkten för ljuderfilerna, ena är för dragning av kortet, andra när spelaren vinner
             playerWin = new SoundPlayer(Bergsen_BlackJack.Properties.Resources.WinSound);
@@ -55,14 +55,14 @@ namespace Bergsen_BlackJack
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Bet500_Click(object sender, EventArgs e)
         {
             kontrollSpelarDealer = 1;
             labelHideAndShow(500); //Kör metoden LabelHideAndShow där vi skickar med parameter på summans man satsar, detta kommer sedan lagras 
         }
 
 
-        private void displayCounterAndCard()       //Metoden körs varje gång ett kort dras (antingen när spelaren trycker på bet eller hit, samt när dealern drar sina kort.
+        private void displayCounterOchCard()       //Metoden körs varje gång ett kort dras (antingen när spelaren trycker på bet eller hit, samt när dealern drar sina kort.
         {
             while (true) {                              //While(true) används här för att loopa oändligt, tills en "break" längre stannar loopen.
 
@@ -99,12 +99,12 @@ namespace Bergsen_BlackJack
                         {
                             
                              summaSpelare = summaSpelare + cardValueInt;               
-                              label2.Text = summaSpelare.ToString();          //Visa värdet av summaSpelare i containern
+                              SpelareSumma.Text = summaSpelare.ToString();          //Visa värdet av summaSpelare i containern
                             
                         if(summaSpelare > 21)
                             {
                         labelHideAndShow();
-                        didPlayerWin(false);
+                        VannSpelare(false);
                         summaSpelare = 0;
                         break;                               // När det är spelaren som spelar så ska loopen alltid stoppas, då spelare ska ha möjlighet att välja "hit" eller "stop"
                                   }
@@ -120,15 +120,15 @@ namespace Bergsen_BlackJack
 
               if(kontrollSpelarDealer == 0)                           // Om det är dealern som spelar så ska loopen köras på till dealern antingen hamnar på samma värde som spelaren, eller högre,
                 {                                                      // om dealern kommer över eller lika med spelaren men inte mer än 21 så vinner dealern, annars förlorar dealern.
-                    label3.Show();
+                    DealerSumma.Show();
                     summaDealer = summaDealer + cardValueInt;
-                    label3.Text = summaDealer.ToString();
+                    DealerSumma.Text = summaDealer.ToString();
                     ApplicationWait();                                     //Här används wait metoden där vi skickar med millisekundrar som parameter av typen int, wait-metoden ser till att pausa programmet 
                                                                     // så att spelaren ska kunna hinna se vilka kort dealern drar.
                     if (summaDealer > 21)
                     {
                         labelHideAndShow();
-                        didPlayerWin(true);
+                        VannSpelare(true);
                         summaDealer = 0;
                         break;
                     }
@@ -136,7 +136,7 @@ namespace Bergsen_BlackJack
                     else if ((summaDealer == summaSpelare & summaDealer < 21) | (summaDealer > summaSpelare & summaDealer < 22))
                     {
                         labelHideAndShow();
-                        didPlayerWin(false);
+                        VannSpelare(false);
                         summaDealer = 0;
                         break;
                     }
@@ -147,7 +147,7 @@ namespace Bergsen_BlackJack
         }
 
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Bet250_Click(object sender, EventArgs e)
         {
             kontrollSpelarDealer = 1;
             labelHideAndShow(250);
@@ -182,17 +182,17 @@ namespace Bergsen_BlackJack
 
 
 
-            label5.Show();
-            pictureBox1.Show();
+            KortNummer.Show();
+            KortBild.Show();
 
             if(korttyp == "Hjärter" | korttyp == "Ruter")
             {
-                label5.ForeColor = System.Drawing.Color.Red;    //Ändra färg på rubrik-containern, ruter och hjärter ska ha rött, annars svart
-                label5.Text = tal;
+                KortNummer.ForeColor = System.Drawing.Color.Red;    //Ändra färg på rubrik-containern, ruter och hjärter ska ha rött, annars svart
+                KortNummer.Text = tal;
             }
             else {
-                label5.ForeColor = System.Drawing.Color.Black;
-                label5.Text = tal;
+                KortNummer.ForeColor = System.Drawing.Color.Black;
+                KortNummer.Text = tal;
             }
 
 
@@ -201,26 +201,26 @@ namespace Bergsen_BlackJack
             if (korttyp == "Hjärter")      // Villkorsats, beroende på vilket villkor som stämmer så ska en viss bild visas
             {
 
-                pictureBox1.Image = Bergsen_BlackJack.Properties.Resources.Hjärter;      
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;                   // Ser till bilden justeras till rätt storlek
+                KortBild.Image = Bergsen_BlackJack.Properties.Resources.Hjärter;      
+                KortBild.SizeMode = PictureBoxSizeMode.StretchImage;                   // Ser till bilden justeras till rätt storlek
             }
 
             if(korttyp == "Spader")
             {
-                pictureBox1.Image = Bergsen_BlackJack.Properties.Resources.spader;
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                KortBild.Image = Bergsen_BlackJack.Properties.Resources.spader;
+                KortBild.SizeMode = PictureBoxSizeMode.StretchImage;
             }
 
             if (korttyp == "Klöver")
             {
-                pictureBox1.Image = Bergsen_BlackJack.Properties.Resources.klöver;
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                KortBild.Image = Bergsen_BlackJack.Properties.Resources.klöver;
+                KortBild.SizeMode = PictureBoxSizeMode.StretchImage;
             }
 
             if (korttyp == "Ruter")
             {
-                pictureBox1.Image = Bergsen_BlackJack.Properties.Resources.ruter;
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                KortBild.Image = Bergsen_BlackJack.Properties.Resources.ruter;
+                KortBild.SizeMode = PictureBoxSizeMode.StretchImage;
             }
 
         }
@@ -236,67 +236,67 @@ namespace Bergsen_BlackJack
 
 
 
-        private void button3_Click(object sender, EventArgs e) //BetKnapp
+        private void Bet100_Click(object sender, EventArgs e) //BetKnapp
         {
             kontrollSpelarDealer = 1;
             labelHideAndShow(100);
         }
 
-        private void button4_Click(object sender, EventArgs e) //Hit-Knapp
+        private void HitKnapp_Click(object sender, EventArgs e) //Hit-Knapp
         {
 
-            displayCounterAndCard();
+            displayCounterOchCard();
         }
 
-        private void button5_Click(object sender, EventArgs e) //Stop-knapp
+        private void StandKnapp_Click(object sender, EventArgs e) //Stop-knapp
         {
             kontrollSpelarDealer = 0;
-            button5.Hide();
-            button4.Hide();
-           displayCounterAndCard();
+            StandKnapp.Hide();
+            HitKnapp.Hide();
+           displayCounterOchCard();
         }
 
 
         //Overload
         public void labelHideAndShow(int moneyBet)         //Dölj/visa containrar som är av intresse, samt justering av de globala variabler (fieldsen) som lagrar data
         {
-            label6.Hide();
-            label2.Show();
-            pictureBox2.Hide();
+            TextIPratbubbla.Hide();
+            SpelareSumma.Show();
+            Pratbubbla.Hide();
             summaDealer = 0;
             summaSpelare = 0;
-            label3.Hide();
+            DealerSumma.Hide();
             AntaletPengar = AntaletPengar - moneyBet;
             satsadePengar = moneyBet;
-            label1.Text = "Kr: " + AntaletPengar.ToString();
-            button1.Hide();
-            button2.Hide();
-            button3.Hide();
-            button4.Show();
-            button5.Show();
-            displayCounterAndCard();
+            Pengar.Text = "Kr: " + AntaletPengar.ToString();
+            Betta500.Hide();
+            Betta250.Hide();
+            Betta100.Hide();
+            HitKnapp.Show();
+            StandKnapp.Show();
+            displayCounterOchCard();
         }
 
         //Overload
         public void labelHideAndShow()       //Dölj/visa containrar som är av intresse
         {
-            pictureBox2.Show();
-            label6.Show();
-            label6.BringToFront();
-            button1.Show();
-            button2.Show();
-            button3.Show();
-            button4.Hide();
-            button5.Hide();
+            Pratbubbla.Show();
+            TextIPratbubbla.Show();
+            TextIPratbubbla.BringToFront();
+            Betta500.Show();
+            Betta250.Show();
+            Betta100.Show();
+            HitKnapp.Hide();
+            StandKnapp.Hide();
         }
 
-        public void didPlayerWin(bool didPlayerWin)         //Dölj/visa text beroende på om boolean didPlayerWin är false eller true
+        public void VannSpelare(bool didPlayerWin)         //Dölj/visa text beroende på om boolean didPlayerWin är false eller true
         {
             if (didPlayerWin)
             {
                 AntaletPengar = AntaletPengar + (satsadePengar * 2);
-                label1.Text = "Kr: " + AntaletPengar.ToString();
-                label6.Text = "Du vinner!";
+                Pengar.Text = "Kr: " + AntaletPengar.ToString();
+                TextIPratbubbla.Text = "Du vinner!";
                 satsadePengar = 0;
                 drawCard.clearCheckList();
                 Console.WriteLine("-------------NyttDeck");
@@ -305,7 +305,7 @@ namespace Bergsen_BlackJack
 
             else
             {
-                label6.Text = "Tyvärr, dealer vinner";
+                TextIPratbubbla.Text = "Tyvärr, dealer vinner";
                 satsadePengar = 0;
                 drawCard.clearCheckList();
                 Console.WriteLine("-------------NyttDeck");
