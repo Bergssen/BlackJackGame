@@ -12,7 +12,7 @@ namespace Bergsen_BlackJack
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()                                      //Metoden som körs när programmet startas, nytt objekt av Form1 skapas
+        static void Main()                                      //Metoden som körs när programmet startas, nytt objekt av StartSida instansieras
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
