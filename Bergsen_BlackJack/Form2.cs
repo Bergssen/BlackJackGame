@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Bergsen_BlackJack
 {
-    public partial class Form2 : Form
+    public partial class Form2 : Form     
     {
         private int AntaletPengar = 5000;         //Fields, fält av olika datatyper och klasser som lagrar data och som ändras beroende på vad som händer under programmets gång.
         private int summaDealer = 0;
@@ -257,6 +257,7 @@ namespace Bergsen_BlackJack
         }
 
 
+        //Overload
         public void labelHideAndShow(int moneyBet)         //Dölj/visa containrar som är av intresse, samt justering av de globala variabler (fieldsen) som lagrar data
         {
             label6.Hide();
@@ -276,6 +277,7 @@ namespace Bergsen_BlackJack
             displayCounterAndCard();
         }
 
+        //Overload
         public void labelHideAndShow()       //Dölj/visa containrar som är av intresse
         {
             pictureBox2.Show();
