@@ -17,8 +17,6 @@ namespace Bergsen_BlackJack
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new StartSida());
-            Console.WriteLine("haha");
-            Console.WriteLine("hahaAgain");
         }
     }
 }
